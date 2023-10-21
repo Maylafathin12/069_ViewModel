@@ -174,7 +174,7 @@ fun TampilLayout(
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
     ){
         Column (
-            verticalArrangement = Arrangement.spacedBy(18.dp),
+            verticalArrangement = Arrangement.spacedBy(19.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(20.dp)
         ){
