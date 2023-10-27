@@ -19,7 +19,7 @@ class CobaViewModel : ViewModel() {
         private set
     var jenisKl: String by mutableStateOf("")
         private set
-    var status: String by mutableStateOf("")
+    var statuss: String by mutableStateOf("")
         private set
     var alamt: String by mutableStateOf("")
         private set
@@ -31,7 +31,7 @@ class CobaViewModel : ViewModel() {
         noTlp = tlp;
         emaill = eml;
         jenisKl = jk;
-        status = sts;
+        statuss = sts;
         alamt = alm;
     }
     fun setStatus(pilihStatus: String){

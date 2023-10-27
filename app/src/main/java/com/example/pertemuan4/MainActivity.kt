@@ -220,35 +220,27 @@ SelectJk(
     Button(modifier = Modifier.fillMaxWidth(),
         onClick = {
             cobaViewModel.insertData(textNama, textTlp, textEmail, dataForm.sex, dataForm.status, textAlm)
-        }){}
-    SelectStatus(
-        options = DataSource.jenis.map { id -> context.resources.getString(id)},
-        onSelectionChanged = {cobaViewModel.setJenis(it)})
-    Button(modifier = Modifier.fillMaxWidth(),
-        onClick = {
-            cobaViewModel.insertData(textNama, textTlp, textEmail, dataForm.sex, dataForm.status, textAlm)
-        }){
-        Text(text = stringResource(id = R.string.submit),
-            fontSize = 16.sp)
+        }){ Text(text = stringResource(id = R.string.submit),
+        fontSize = 16.sp)
     }
+
     Spacer(modifier = Modifier.height(100.dp))
-    TextHasil( namanya = cobaViewModel.namaUsr, telponnya =cobaViewModel.noTlp, jenisnya =cobaViewModel.jenisKl, statusnya =cobaViewModel.status, emailnya= cobaViewModel.emaill, almnya = cobaViewModel.alamt)
+    TextHasil( namanya = cobaViewModel.namaUsr, telponnya =cobaViewModel.noTlp, jenisnya =cobaViewModel.jenisKl, statusnya =cobaViewModel.statuss, emailnya= cobaViewModel.emaill, almnya = cobaViewModel.alamt)
     }
 
 
 @Composable
 fun TampilLayout(
-    modifier: Modifier = Modifier)
-{
-    Card (
+    modifier: Modifier = Modifier) {
+    Card(
         modifier = modifier,
         elevation = CardDefaults.cardElevation(defaultElevation = 5.dp)
-    ){
-        Column (
+    ) {
+        Column(
             verticalArrangement = Arrangement.spacedBy(19.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(20.dp)
-        ){
+        ) {
             TampilForm()
         }
     }
