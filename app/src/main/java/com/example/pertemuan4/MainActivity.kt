@@ -67,7 +67,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TextHasil(namanya: String, telponnya: String, jenisnya: String){
+fun TextHasil(namanya: String, telponnya: String, jenisnya: String, emailnya: String, almnya: String){
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -84,6 +84,14 @@ fun TextHasil(namanya: String, telponnya: String, jenisnya: String){
                 .padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(text = "Jenis Kelamin : " + jenisnya,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 4.dp)
+        )
+        Text(text = "Email : " + emailnya,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 4.dp)
+        )
+        Text(text = "Alamat : " + almnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 4.dp)
         )
@@ -121,6 +129,38 @@ fun SelectJk(
 
     }
 }
+@Composable
+fun SelectStatus(
+    options: List<String>,
+    onSelectionChanged: (String) -> Unit = {}
+){
+    var selectedValue by rememberSaveable { mutableStateOf("") }
+
+    Column (modifier = Modifier.padding(16.dp)) {
+        options.forEach { item ->
+            Row(
+                modifier = Modifier.selectable(selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                RadioButton(selected = selectedValue == item,
+                    onClick = {
+                        selectedValue = item
+                        onSelectionChanged(item)
+                    }
+                )
+                Text(item)
+            }
+
+        }
+
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
@@ -128,6 +168,12 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         mutableStateOf("")
     }
     var textTlp by remember {
+        mutableStateOf("")
+    }
+    var textEmail by remember {
+        mutableStateOf("")
+    }
+    var textAlm by remember {
         mutableStateOf("")
     }
 
@@ -148,6 +194,18 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text = "Telepon") },
         onValueChange = { textTlp = it })
+    OutlinedTextField(value = textEmail,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Email") },
+        onValueChange = { textEmail = it })
+    OutlinedTextField(value = textAlm,
+        singleLine = true,
+        shape = MaterialTheme.shapes.large,
+        modifier = Modifier.fillMaxWidth(),
+        label = { Text(text = "Alamat") },
+        onValueChange = { textAlm = it })
 
 SelectJk(
     options = DataSource.jenis.map { id -> context.resources.getString(id)},
@@ -155,14 +213,20 @@ SelectJk(
     Button(modifier = Modifier.fillMaxWidth(),
         onClick = {
             cobaViewModel.insertData(textNama, textTlp, dataForm.sex)
-        }) {
+        }){}
+    SelectStatus(
+        options = DataSource.jenis.map { id -> context.resources.getString(id)},
+        onSelectionChanged = {cobaViewModel.setJenis(it)})
+    Button(modifier = Modifier.fillMaxWidth(),
+        onClick = {
+            cobaViewModel.insertData(textNama, textTlp, dataForm.sex)
+        }){
         Text(text = stringResource(id = R.string.submit),
             fontSize = 16.sp)
     }
     Spacer(modifier = Modifier.height(100.dp))
     TextHasil(namanya = cobaViewModel.namaUsr, telponnya =cobaViewModel.noTlp , jenisnya =cobaViewModel.jenisKl )
     }
-
 
 
 @Composable

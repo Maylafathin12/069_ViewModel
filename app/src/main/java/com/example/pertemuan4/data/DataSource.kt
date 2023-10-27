@@ -5,5 +5,7 @@ object DataSource{
     val jenis = listOf(
         R.string.pria,
         R.string.wanita,
+        R.string.blm,
+        R.string.udh
     )
 }
