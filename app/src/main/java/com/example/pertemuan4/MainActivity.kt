@@ -67,7 +67,7 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun TextHasil(namanya: String, telponnya: String, jenisnya: String, emailnya: String, almnya: String){
+fun TextHasil(namanya: String, telponnya: String, emailnya: String, jenisnya: String, statusnya: String, almnya: String){
     ElevatedCard(
         elevation = CardDefaults.cardElevation(
             defaultElevation = 6.dp
@@ -84,6 +84,10 @@ fun TextHasil(namanya: String, telponnya: String, jenisnya: String, emailnya: St
                 .padding(horizontal = 10.dp, vertical = 4.dp)
         )
         Text(text = "Jenis Kelamin : " + jenisnya,
+            modifier = Modifier
+                .padding(horizontal = 10.dp, vertical = 4.dp)
+        )
+        Text(text = "Status Menikah : " + statusnya,
             modifier = Modifier
                 .padding(horizontal = 10.dp, vertical = 4.dp)
         )
@@ -188,18 +192,21 @@ fun TampilForm(cobaViewModel: CobaViewModel = viewModel()) {
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text = "Nama Lengkap") },
         onValueChange = { textNama = it })
+
     OutlinedTextField(value = textTlp,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text = "Telepon") },
         onValueChange = { textTlp = it })
+
     OutlinedTextField(value = textEmail,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
         modifier = Modifier.fillMaxWidth(),
         label = { Text(text = "Email") },
         onValueChange = { textEmail = it })
+
     OutlinedTextField(value = textAlm,
         singleLine = true,
         shape = MaterialTheme.shapes.large,
@@ -212,20 +219,20 @@ SelectJk(
     onSelectionChanged = {cobaViewModel.setJenis(it)})
     Button(modifier = Modifier.fillMaxWidth(),
         onClick = {
-            cobaViewModel.insertData(textNama, textTlp, dataForm.sex)
+            cobaViewModel.insertData(textNama, textTlp, textEmail, dataForm.sex, dataForm.status, textAlm)
         }){}
     SelectStatus(
         options = DataSource.jenis.map { id -> context.resources.getString(id)},
         onSelectionChanged = {cobaViewModel.setJenis(it)})
     Button(modifier = Modifier.fillMaxWidth(),
         onClick = {
-            cobaViewModel.insertData(textNama, textTlp, dataForm.sex)
+            cobaViewModel.insertData(textNama, textTlp, textEmail, dataForm.sex, dataForm.status, textAlm)
         }){
         Text(text = stringResource(id = R.string.submit),
             fontSize = 16.sp)
     }
     Spacer(modifier = Modifier.height(100.dp))
-    TextHasil(namanya = cobaViewModel.namaUsr, telponnya =cobaViewModel.noTlp , jenisnya =cobaViewModel.jenisKl )
+    TextHasil( namanya = cobaViewModel.namaUsr, telponnya =cobaViewModel.noTlp, jenisnya =cobaViewModel.jenisKl, statusnya =cobaViewModel.status, emailnya= cobaViewModel.emaill, almnya = cobaViewModel.alamt)
     }
 
 
